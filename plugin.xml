@@ -5,24 +5,36 @@
         version="1.0">
 
     <name>Restrict Keyboard</name>
-
     <description>
-      This is a simple Cordova plugin that prevents custom keyboards from being used on iOS.
+        This is a simple Cordova plugin that prevents custom keyboards from being used on iOS and
+        provides JS API to check if custom keyboard is used on Android.
     </description>
-
     <license>MIT</license>
+
+    <js-module name="RestrictKeyboard" src="www/restrict-keyboard.js">
+        <clobbers target="RestrictKeyboard"/>
+    </js-module>
+
+    <!-- Android Configuration -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="RestrictKeyboard">
+                <param name="android-package" value="restrictkeyboard.RestrictKeyboard"/>
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"/>
+        <source-file src="src/android/restrictkeyboard/RestrictKeyboard.java" target-dir="src/restrictkeyboard" />
+    </platform>
 
     <!-- iOS Configuration -->
     <platform name="ios">
-
         <config-file target="config.xml" parent="/*">
             <feature name="RestrictKeyboard">
                 <param name="ios-package" value="CDVRestrictKeyboard" />
             </feature>
         </config-file>
-
         <source-file src="src/ios/CDVRestrictKeyboard.m" />
-
     </platform>
 
 </plugin>
